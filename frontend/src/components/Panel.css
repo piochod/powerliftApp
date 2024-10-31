@@ -1,0 +1,85 @@
+.panel{
+    background-color: #23272f;
+    min-height: 100vh;
+    height: 100%;
+    color:white;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 200px;
+    padding: 16px;
+}
+
+.panel .top{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.panel .bottom{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px;
+    
+}
+
+.panel .bottom .container{
+    background-image: conic-gradient(from 90deg at -10% 100%, #1b1c1f 0deg, #272728 90deg, #16181d 1turn);
+    overflow: hidden;
+    padding: 16px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 16px;
+}
+
+.panel .bottom .container ul{
+    list-style-type: none;
+    margin: 0px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.panel .bottom .container li{
+    padding: 16px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.panel .bottom .container li:hover{
+    background-color: #22262c;
+    border-radius: 9999px;
+}
+
+.panel .bottom .container button{
+    background-color: #2b303b;
+    color: white;
+    border-radius: 9999px;
+    border: 0;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 40px;
+    margin: 10px;
+    cursor: pointer;
+}
+
+.panel .bottom .container button:hover{
+    background-color: #323742;
+
+}
+
+
+.panel .bottom .container .workouts {
+    width: 100%;
+    max-height: 190px;
+    overflow: scroll;
+    overflow-x: hidden;
+    scrollbar-width: none;
+}

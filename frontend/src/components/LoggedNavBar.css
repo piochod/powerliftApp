@@ -1,0 +1,48 @@
+.loggedNavBar{
+    height: 100%;
+    width: 200px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-image: conic-gradient(from 90deg at -10% 100%, #1b1c1f 0deg, #272728 90deg, #16181d 1turn);
+    overflow: hidden;
+    padding: 8px;
+    color: white;
+}
+
+.loggedNavBar ul {
+    height:100%;
+    margin: 0;
+    padding: 5px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+.loggedNavBar ul h4{
+    margin-top: 16px;
+}
+  
+.loggedNavBar ul li,.loggedNavBar ul h4 {
+    padding: 8px;
+}
+
+.loggedNavBar ul li{
+    cursor: pointer;
+    width:max-content;
+    padding: 8px;
+}
+
+.loggedNavBar ul li:hover{
+    background-color: #22262c;
+    border-radius: 9999px;
+}
+
+
+  
+.loggedNavBar ul li:last-of-type {
+    margin-top:auto;
+    margin-bottom: 16px;
+    font-weight: bold;
+}

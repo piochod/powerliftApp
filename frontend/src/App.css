@@ -1,0 +1,10 @@
+*{
+    box-sizing: border-box;
+    font-family: Optimistic Text, -apple-system, ui-sans-serif, system-ui, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    scrollbar-color: #8e8e8e #fff;
+    scrollbar-width: thin;
+}
+
+body{
+    margin: 0;
+}
