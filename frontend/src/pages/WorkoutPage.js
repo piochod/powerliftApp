@@ -5,7 +5,6 @@ import WorkoutStart from '../components/WorkoutStart'
 const WorkoutPage = () => {
   return (
     <div>
-      <LoggedNavBar />
       <WorkoutStart />
 
     </div>

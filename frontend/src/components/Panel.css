@@ -1,3 +1,6 @@
+.hidden{
+    display: none;
+}
 .panel{
     background-color: #23272f;
     min-height: 100vh;
@@ -8,6 +11,11 @@
     flex-direction: column;
     margin-left: 200px;
     padding: 16px;
+}
+
+.panel a{
+    text-decoration: none;
+    color: white;
 }
 
 .panel .top{
@@ -24,8 +32,46 @@
     align-items: center;
     justify-content: center;
     padding: 32px;
+    flex-direction: column;
     
 }
+
+.panel .bottom .chartContainer{
+    background-image: conic-gradient(from 90deg at -10% 100%, #1b1c1f 0deg, #272728 90deg, #16181d 1turn);
+    overflow: hidden;
+    padding: 16px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 16px;
+    min-width: 400px;
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.panel .bottom .chartContainer h2{
+    margin: 0px;
+    padding: 8px 0px 16px 0px;
+}
+
+.panel .bottom .chartContainer button, .panel .searchExercises button{
+    background-color: #2b303b;
+    color: white;
+    border-radius: 9999px;
+    border: 0;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 40px;
+    margin: 16px;
+    cursor: pointer;
+}
+
+.panel .bottom .chartContainer button:hover{
+    background-color: #323742;
+}
+
 
 .panel .bottom .container{
     background-image: conic-gradient(from 90deg at -10% 100%, #1b1c1f 0deg, #272728 90deg, #16181d 1turn);
@@ -34,12 +80,18 @@
     border-radius: 10px;
     text-align: center;
     margin: 16px;
+    width: 400px;
+}
+
+.panel .bottom .container h2{
+    margin: 0px;
+    padding: 8px 0px 16px 0px;
 }
 
 .panel .bottom .container ul{
     list-style-type: none;
+    padding: 8px;
     margin: 0px;
-    padding: 16px;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -47,13 +99,41 @@
 
 }
 
-.panel .bottom .container li{
-    padding: 16px;
-    cursor: pointer;
+.panel .bottom .container table{
+    padding: 8px;
+    margin: 8px;
+    list-style: none;
     width: 100%;
+    background-color: #22262c;
+    border-radius: 16px;
 }
 
-.panel .bottom .container li:hover{
+.panel .bottom .container table td{
+    padding: 8px;
+}
+
+
+.panel .bottom .container li{
+    padding: 16px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.panel .bottom .container a li{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.panel .bottom .container a li p{
+    margin: 0px;
+}
+
+.panel .bottom .container a li:hover{
+    cursor: pointer;
     background-color: #22262c;
     border-radius: 9999px;
 }
@@ -78,8 +158,23 @@
 
 .panel .bottom .container .workouts {
     width: 100%;
-    max-height: 190px;
+    max-height: 400px;
     overflow: scroll;
     overflow-x: hidden;
     scrollbar-width: none;
+}
+
+.panel .bottom .container .workouts p{
+    font-size: medium;
+    text-align: center;
+}
+
+.panel .addExercise .container select{
+    background-color: #2b303b;
+    color: white;
+    border: none;
+    font-size: 20px;
+    margin: 16px 0px 16px ;
+    border-radius: 10px;
+    padding: 8px 16px;
 }

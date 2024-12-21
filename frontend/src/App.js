@@ -1,7 +1,5 @@
 import './App.css';
 import Cookies from 'js-cookie';
-import NavBar from './components/NavBar';
-import Panel from './components/Panel';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import {
@@ -14,6 +12,8 @@ import {
 import LoggedPage from './pages/LoggedPage';
 import WorkoutPage from './pages/WorkoutPage';
 import StatsPage from './pages/StatsPage';
+import WorkoutViewPage from './pages/WorkoutViewPage';
+import ExercisesPage from './pages/ExercisesPage';
 
 function App() {
 
@@ -50,6 +50,8 @@ function App() {
         <Route path='/register' element={<RegisterPage />} loader={checkNotAuth} />
         <Route path='/workout' element={<WorkoutPage />} loader={checkAuth} />
         <Route path='/stats' element={<StatsPage />} loader={checkAuth} />
+        <Route path='/workout/:id' element={<WorkoutViewPage />} loader={checkAuth} />
+        <Route path='/exercises' element={<ExercisesPage />} loader={checkAuth} />
       </Route>
     )
   )

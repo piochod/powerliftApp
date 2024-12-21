@@ -1,7 +1,6 @@
 import React, {useRef} from 'react';
 import './LoginPage.css';
 import Cookies from 'js-cookie';
-import NavBar from '../components/NavBar'
 
 
 const LoginPage = () => {
@@ -36,16 +35,7 @@ const LoginPage = () => {
         throw Error;
       }
     } catch(error){
-
-    }
-    finally{
-
-    }
-
-    
-    
-    
-
+    }   
   }
 
 

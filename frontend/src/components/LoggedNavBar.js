@@ -20,6 +20,7 @@ const LoggedNavBar = () => {
         if(response.ok){
           const userData = await response.json();
           setUsername(userData.user.username);
+          Cookies.set('userId', userData.user.id);
         }
       }
       catch(error){
@@ -47,7 +48,7 @@ const LoggedNavBar = () => {
             <h4>Hi {username}</h4>
             <li onClick={() => {redirect('home')}}>Home</li>
             <li onClick={() => {redirect('workout')}}>Start a workout</li>
-            <li>Exercices</li>
+            <li onClick={() => {redirect('exercises')}}>Exercices</li>
             <li onClick={() => {redirect('stats')}}>My stats</li>
             <li onClick={destroySession}>Log Out</li>
 

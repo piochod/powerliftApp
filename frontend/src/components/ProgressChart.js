@@ -1,47 +1,97 @@
-import React from 'react';
-import {LineChart, Line, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend} from 'recharts';
+import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+import {
+  LineChart,
+  Line,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+} from "recharts";
 
-const ProgressChart = () => {
+const ProgressChart = ({ exerciseId }) => {
+  const [stats, setStats] = useState([]);
 
-    const training = [
+  const fetchExerciseStats = async (exerciseId) => {
+    try {
+      const token = Cookies.get("accessToken");
+      const userId = Cookies.get("userId");
+      const response = await fetch(
+        `http://localhost:3000/exercise/${exerciseId}/${userId}/workout-stats`,
         {
-            date: '20 Dec',
-            oneRM: 250,
-            volume: 1240
-        },
-        {
-            date: '22 Dec',
-            oneRM: 260,
-            volume: 1140
-        },{
-            date: '24 Dec',
-            oneRM: 210,
-            volume: 1540
-        },{
-            date: '25 Dec',
-            oneRM: 280,
-            volume: 940
-        },{
-            date: '26 Dec',
-            oneRM: 290,
-            volume: 900
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         }
-    ];
+      );
+      if (response.status === 200) {
+        const result = await response.json();
+        const maxVolume = Math.max(...result.map((item) => item.volume));
+        const maxOrm = Math.max(...result.map((item) => item.orm));
+        const normalizedData = result.map(item => ({
+            ...item,
+            volumePercentage: maxVolume > 0 ? (item.volume / maxVolume) * 100 : 0, // Normalize volume
+            ormPercentage: maxOrm > 0 ? (item.orm / maxOrm) * 100 : 0, // Normalize ORM
+          }));
 
+        setStats(normalizedData);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
+  useEffect(() => {
+    setStats([]);
+    fetchExerciseStats(exerciseId);
+  }, [exerciseId]);
 
+  if (stats.length === 0) {
+    return (
+      <p>
+        No data for this exercise.
+      </p>
+    );
+  }
 
   return (
-    <ResponsiveContainer width={300} height={250}>
-        <LineChart width={250} height={250} data={training} >
-            <XAxis  stroke='#fff'/>
-            <YAxis stroke='#fff'/>
-            <Tooltip />
-            <Line type="monotone" dataKey='oneRM' stroke='#2563eb'/>
-            <Line type="monotone" dataKey='volume' stroke='#7c3aed'/>
-        </LineChart>
+    <ResponsiveContainer
+      minWidth={700}
+      width="100%"
+      height={500}
+      style={{ padding: "16px" }}
+    >
+      <LineChart width={500} height={550} data={stats}>
+        <XAxis stroke="#fff" tick={false} grid={false} />
+        <YAxis
+          stroke="#fff"
+          grid={false}
+          tickFormatter={(value) => `${value}%`}
+          domain={[0, 100]}
+        />
+        <Tooltip
+          content={({ payload }) => {
+            if (payload && payload.length) {
+              const data = payload[0];
+              return (
+                <div style={{ padding: "10px" }}>
+                  <p>Workout: {data.payload.workoutName}</p>
+                  <p>1RM: {data.payload.orm} kg (1RM)</p>
+                  <p>Volume: {data.payload.volume} kg</p>
+                </div>
+              );
+            }
+            return null;
+          }}
+        />
+        <Line type="monotone" dataKey="ormPercentage" stroke="#2563eb" />
+        <Line type="monotone" dataKey="volumePercentage" stroke="#7c3aed" />
+      </LineChart>
     </ResponsiveContainer>
-  )
-}
+  );
+};
 
-export default ProgressChart
+export default ProgressChart;

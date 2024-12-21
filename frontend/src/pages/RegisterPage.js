@@ -23,18 +23,26 @@ const RegisterPage = () => {
     });
 
     const result = await response.json();
-    console.log(result);
+    if(response.status=== 201){
+      window.location.href = 'http://localhost:3001/login';
+    }
+    else{
+      console.log('Error')
+    }
+    
 
   }
   return (
-    <div className='container'>
+    <div className='loginPage'>
+      <div className='container'>
 
-            <form className='form' onSubmit={handleSubmit}>
-                <h1>Sign up</h1>
-                <input type='text' placeholder='Username' ref={usernameRef}/>
-                <input type='password' placeholder='Password' ref={passwordRef}/>
-                <button type='submit'>Sign up</button>
-            </form>  
+              <form className='form' onSubmit={handleSubmit}>
+                  <h1>Sign up</h1>
+                  <input type='text' placeholder='Username' ref={usernameRef}/>
+                  <input type='password' placeholder='Password' ref={passwordRef}/>
+                  <button type='submit'>Sign up</button>
+              </form>  
+      </div>
     </div>
   )
 }

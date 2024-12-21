@@ -68,7 +68,7 @@ const Exercise = sequelize.define('exercise',{
     tablename: "exercises",
     timestamps: false
 });
-
+ 
 const Workout = sequelize.define('workout',{
     name:{
         type: DataTypes.STRING,
@@ -117,6 +117,7 @@ const WorkoutExercise = sequelize.define('WorkoutExercise', {
 
 Workout.belongsTo(User);  // Many workouts to one user
 Workout.hasMany(Set, { foreignKey: 'workoutId' });  // A workout can have many sets
+Set.belongsTo(Workout, {foreignKey: 'workoutId'});
 Exercise.hasMany(Set, { foreignKey: 'exerciseId' });  // An exercise can have many sets
 
 Set.belongsTo(Exercise, { foreignKey: 'exerciseId' });
