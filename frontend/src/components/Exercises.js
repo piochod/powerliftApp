@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import SearchBar from './SearchBar';
+import Cookies from 'js-cookie';
 
 
 const Exercises = () => {
@@ -10,24 +11,50 @@ const Exercises = () => {
 
 
   const handlePosting = async () => {
+    try {
+      const token  = Cookies.get('accessToken');
+      const response = await fetch('http://localhost:3000/exercise', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          exercise: exerciseName,
+          muscle_group: muscleGroup,
+        }),
+      });
 
-  }
+      const data = await response.json();
+
+      if (response.status === 201) {
+        setExerciseName('');
+        setMuscleGroup('');
+        setResults([]);
+        setAdd(false);
+      } else {
+        console.log(data.message || 'An error occurred while adding the exercise.');
+      }
+    } catch (error) {
+      console.error('Error during posting:', error);
+    }
+  };
 
 
   return (
-    <div class='panel'>
+    <div className='panel'>
       <div className='top'>
         <h1>Exercises</h1>
       </div>
       <div className={add ? 'searchExercises hidden' : 'searchExercises'}>
-        <SearchBar setResults={setResults} />
+        <SearchBar setResults={setResults} add={add} />
         <ul className='searchExercisesList'>
           {
             results.length === 0 ? (
               <p>No exercise found</p>
             ) : (
               results.map((result, id) => (
-                <li key={id}>
+                <li className='noCursor' key={id}>
                   {result.exercise}
                 </li>
               )))}
@@ -64,7 +91,7 @@ const Exercises = () => {
           </select>
           <div className='buttonsFinishWorkout'>
             <button onClick={() => setAdd(!add)}>Back</button>
-            <button onClick={() => handlePosting()}>Finish</button>
+            <button onClick={() => handlePosting()}>Add</button>
           </div>
         </div>
       </div>

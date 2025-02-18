@@ -1,40 +1,47 @@
-.hidden{
+.hidden {
     display: none !important;
 }
 
 
 
-.panelWorkout{
+.panelWorkout {
     margin: 0px;
     background-color: #23272f;
     min-height: 100vh;
     height: 100%;
-    color:white;
+    color: white;
     display: flex;
     align-items: center;
     flex-direction: column;
     padding: 16px;
 }
 
-.panelWorkout .bottom .container  .workoutName{
+.panelWorkout .top{
     width: 100%;
-    padding:12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.panelWorkout .bottom .container .workoutName {
+    width: 100%;
+    padding: 12px 16px;
     border-radius: 9999px;
     border: none;
     margin: 16px 0px 16px 0px;
-    
+
 }
 
-.panelWorkout .bottom form.container{
+.panelWorkout .bottom form.container {
     padding: 32px;
 }
 
-.panelWorkout .bottom .container input[type="text"]:focus{
+.panelWorkout .bottom .container input[type="text"]:focus {
     outline: none;
 }
 
 
-.panelWorkout .bottomWorkout .searchExercisesList{
+.panelWorkout .bottomWorkout .searchExercisesList {
     width: 100%;
     height: 100%;
     display: flex;
@@ -46,7 +53,19 @@
     margin: 0;
 }
 
-.panelWorkout .bottomWorkout .searchExercisesList .exercise{
+.panelWorkout .bottomWorkout .searchExercisesList {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    list-style: none;
+    padding: 0px 32px 16px 32px;
+    margin: 0;
+}
+
+.panelWorkout .bottomWorkout .searchExercisesList .exercise {
     background-image: conic-gradient(from 90deg at -10% 100%, #1b1c1f 0deg, #272728 90deg, #16181d 1turn);
     overflow: hidden;
     padding: 16px;
@@ -55,25 +74,25 @@
     margin: 16px;
 }
 
-.panelWorkout .bottomWorkout .searchExercisesList .exercise table{
+.panelWorkout .bottomWorkout .searchExercisesList .exercise table {
     padding: 16px;
     margin: 0px;
     list-style: none;
 }
 
-.panelWorkout .bottomWorkout .searchExercisesList .exercise table td{
+.panelWorkout .bottomWorkout .searchExercisesList .exercise table td {
     padding: 8px;
 }
 
-.panelWorkout .bottomWorkout .searchExercisesList .exercise table td .delButton{
-    width: 24px;             
+.panelWorkout .bottomWorkout .searchExercisesList .exercise table td .delButton {
+    width: 24px;
     height: 24px;
-    border-radius: 50%;  
-    background-color: #862020; 
-    color: white;   
-    border: none;        
-    display: flex;        
-    align-items: center;  
+    border-radius: 50%;
+    background-color: #862020;
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
     justify-content: center;
     cursor: pointer;
     font-weight: bold;
@@ -81,14 +100,14 @@
 
 }
 
-.panelWorkout .bottomWorkout .searchExercisesList .exercise table select{
+.panelWorkout .bottomWorkout .searchExercisesList .exercise table select {
     background-color: #2b303b;
     color: white;
     border: none;
     font-size: 20px;
 }
 
-.panelWorkout .bottomWorkout .searchExercisesList .exercise table input{
+.panelWorkout .bottomWorkout .searchExercisesList .exercise table input {
     max-width: 100px;
     color: white;
     outline: none;
@@ -99,7 +118,7 @@
 }
 
 
-.panelWorkout .bottomWorkout button{
+.panelWorkout .bottomWorkout button {
     padding: 16px;
     border-radius: 9999px;
     border: none;
@@ -111,7 +130,7 @@
     cursor: pointer;
 }
 
-.panelWorkout .bottomWorkout .bottomButtons{
+.panelWorkout .bottomWorkout .bottomButtons {
     width: 100%;
     display: flex;
     align-items: center;
@@ -120,8 +139,8 @@
 }
 
 
-.panelWorkout .bottomWorkout button:hover{
-    background-color:#22262c ;
+.panelWorkout .bottomWorkout button:hover {
+    background-color: #22262c;
 }
 
 .searchExercises {
@@ -135,37 +154,41 @@
     border-radius: 8px;
 }
 
-.searchExercises ul{
+.searchExercises ul {
     width: 100%;
     height: 600px;
     list-style: none;
     padding: 0px 32px 16px 32px;
-    overflow-y:scroll;
+    overflow-y: scroll;
     margin: 0;
     scrollbar-width: none;
 }
 
-.searchExercises ul p{
+.searchExercises ul p {
     font-size: large;
     font-weight: bold;
     text-align: center;
 }
 
 
-.searchExercises li{
+.searchExercises li {
     font-size: 20px;
     padding: 16px;
     cursor: pointer;
     width: 100%;
 }
 
+.searchExercises li.noCursor {
+    cursor: auto;
+}
 
-.searchExercises li:hover{
+
+.searchExercises li:hover {
     background-color: #22262c;
     border-radius: 9999px;
 }
 
-.panelWorkout .bottomWorkout{
+.panelWorkout .bottomWorkout {
     width: 100%;
     height: 100%;
     display: flex;
@@ -174,14 +197,15 @@
     flex-direction: column;
 }
 
-.panelWorkout .finishWorkout{
+.panelWorkout .finishWorkout {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100%;
 }
 
-.panelWorkout .finishWorkout .container, .panel .addExercise .container{
+.panelWorkout .finishWorkout .container,
+.panel .addExercise .container {
     background-image: conic-gradient(from 90deg at -10% 100%, #1b1c1f 0deg, #272728 90deg, #16181d 1turn);
     overflow: hidden;
     padding: 32px;
@@ -192,7 +216,8 @@
     flex-direction: column;
 }
 
-.panelWorkout .finishWorkout .container input, .panel .addExercise .container input{
+.panelWorkout .finishWorkout .container input,
+.panel .addExercise .container input {
     color: white;
     outline: none;
     background-color: #2b303b;
@@ -203,13 +228,15 @@
     width: 300px;
 }
 
-.panelWorkout .finishWorkout .container .buttonsFinishWorkout, .panel .addExercise .container .buttonsFinishWorkout{
+.panelWorkout .finishWorkout .container .buttonsFinishWorkout,
+.panel .addExercise .container .buttonsFinishWorkout {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.panelWorkout .finishWorkout .container .buttonsFinishWorkout button, .panel .addExercise .container .buttonsFinishWorkout button{
+.panelWorkout .finishWorkout .container .buttonsFinishWorkout button,
+.panel .addExercise .container .buttonsFinishWorkout button {
     padding: 16px;
     border-radius: 9999px;
     border: none;

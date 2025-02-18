@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import SearchBar from './SearchBar';
-import Cookies from 'js-cookie';
 import './Panel.css'
 import ProgressChart from './ProgressChart'
 import { fetchExerciseData } from '../utils/fetchUtils';

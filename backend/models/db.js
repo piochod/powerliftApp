@@ -92,37 +92,12 @@ const Workout = sequelize.define('workout',{
     timestamps: false
 });
 
-const WorkoutExercise = sequelize.define('WorkoutExercise', {
-    workoutId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'workouts',
-        key: 'id'
-      }
-    },
-    exerciseId: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'exercises',
-        key: 'id'
-      }
-    }
-  }, {
-    tableName: 'workout_exercises',
-    timestamps: false
-  });
-
-
-
-
-Workout.belongsTo(User);  // Many workouts to one user
-Workout.hasMany(Set, { foreignKey: 'workoutId' });  // A workout can have many sets
+Workout.hasMany(Set, { foreignKey: 'workoutId' }); 
 Set.belongsTo(Workout, {foreignKey: 'workoutId'});
-Exercise.hasMany(Set, { foreignKey: 'exerciseId' });  // An exercise can have many sets
+Exercise.hasMany(Set, { foreignKey: 'exerciseId' });
 
 Set.belongsTo(Exercise, { foreignKey: 'exerciseId' });
 User.hasMany(Workout, { foreignKey: 'userId' });
-// A Workout belongs to a single User
 Workout.belongsTo(User, { foreignKey: 'userId' });
 
-module.exports = {User, Workout, Set, Exercise, WorkoutExercise, sequelize};
+module.exports = {User, Workout, Set, Exercise, sequelize};

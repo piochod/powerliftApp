@@ -36,6 +36,23 @@
     font-size: 16px;
 }
 
+.container .form a{
+    margin-bottom: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: underline;
+    color: white;
+}
+.container .form .error-message{
+    color: rgb(194, 0, 0);
+    margin-bottom: 20px;
+}
+
+.container .form .success-message{
+    color: rgb(6, 184, 51);
+    margin-bottom: 20px;
+}
+
 .container .form button:hover{
     background-color: #16181d;
 }

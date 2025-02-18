@@ -51,7 +51,6 @@ const WorkoutStart = () => {
       updatedExercises[exerciseIndex].sets[setIndex][field] = value;
     }
     setExercises(updatedExercises);
-    console.log(exercises);
   };
 
   const handleDeleteSet = (exerciseIndex, setIndex) => {
@@ -73,8 +72,8 @@ const WorkoutStart = () => {
     const postData = exercises.map((exercise) => ({
       'id': exercise.id,
       'sets': exercise.sets.map((set) => ({
-        weight: Number(set.kg) || null,  // Convert to number, default to null if empty or NaN
-        reps: Number(set.reps) || null, // Convert to number, default to null if empty or NaN
+        weight: Number(set.kg) || null,
+        reps: Number(set.reps) || null,
         rpe: Number(set.rpe) || null,
       })),
     }));
@@ -83,8 +82,6 @@ const WorkoutStart = () => {
       workoutName: workoutName,
       exercises: postData
     };
-
-    console.log(JSON.stringify(workoutData));
 
     const token = Cookies.get('accessToken');
 
@@ -155,7 +152,7 @@ const WorkoutStart = () => {
                           onChange={(e) => handleInputChange(exerciseIndex, setIndex, 'rpe', e.target.value)}
                         >
                           {[...Array(11)].map((_, i) => {
-                            const value = i*0.5 + 5; // Values from 5 to 10
+                            const value = i * 0.5 + 5;
                             return <option key={value} value={value}>{value}</option>;
                           })}
                         </select>

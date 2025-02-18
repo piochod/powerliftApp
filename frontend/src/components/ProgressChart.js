@@ -7,7 +7,6 @@ import {
   XAxis,
   YAxis,
   Tooltip,
-  Legend,
 } from "recharts";
 
 const ProgressChart = ({ exerciseId }) => {
@@ -16,9 +15,8 @@ const ProgressChart = ({ exerciseId }) => {
   const fetchExerciseStats = async (exerciseId) => {
     try {
       const token = Cookies.get("accessToken");
-      const userId = Cookies.get("userId");
       const response = await fetch(
-        `http://localhost:3000/exercise/${exerciseId}/${userId}/workout-stats`,
+        `http://localhost:3000/exercise/${exerciseId}/workout-stats`,
         {
           method: "GET",
           headers: {
@@ -32,10 +30,10 @@ const ProgressChart = ({ exerciseId }) => {
         const maxVolume = Math.max(...result.map((item) => item.volume));
         const maxOrm = Math.max(...result.map((item) => item.orm));
         const normalizedData = result.map(item => ({
-            ...item,
-            volumePercentage: maxVolume > 0 ? (item.volume / maxVolume) * 100 : 0, // Normalize volume
-            ormPercentage: maxOrm > 0 ? (item.orm / maxOrm) * 100 : 0, // Normalize ORM
-          }));
+          ...item,
+          volumePercentage: maxVolume > 0 ? (item.volume / maxVolume) * 100 : 0,
+          ormPercentage: maxOrm > 0 ? (item.orm / maxOrm) * 100 : 0,
+        }));
 
         setStats(normalizedData);
       }
@@ -79,7 +77,7 @@ const ProgressChart = ({ exerciseId }) => {
               return (
                 <div style={{ padding: "10px" }}>
                   <p>Workout: {data.payload.workoutName}</p>
-                  <p>1RM: {data.payload.orm} kg (1RM)</p>
+                  <p>1RM: {data.payload.orm} kg</p>
                   <p>Volume: {data.payload.volume} kg</p>
                 </div>
               );

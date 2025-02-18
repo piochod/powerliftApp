@@ -14,38 +14,43 @@ import WorkoutPage from './pages/WorkoutPage';
 import StatsPage from './pages/StatsPage';
 import WorkoutViewPage from './pages/WorkoutViewPage';
 import ExercisesPage from './pages/ExercisesPage';
+import { fetchUserInfo } from './utils/fetchUtils';
 
 function App() {
 
-  function checkAuth() {
-    const token = Cookies.get('accessToken');
-    if (!token) {
-      throw redirect('http://localhost:3001/login');
+  async function checkAuth() {
+    try {
+      await fetchUserInfo();
+      return null;
     }
-    return null;
-  }
+    catch (err) {
+      Cookies.remove('accessToken');
+      return redirect('http://localhost:3001/login');
+    }
+  };
 
-  function checkNotAuth() {
-    const token = Cookies.get('accessToken');
-    if (token) {
-      throw redirect('http://localhost:3001/home')
+  async function checkNotAuth() {
+    try {
+      await fetchUserInfo();
+      return null;
     }
-    return null;
-    
-  }
+    catch {
+      return redirect('http://localhost:3001/home');
+    }
+  };
 
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
-        <Route 
-          index 
+        <Route
+          index
           loader={() => {
             const token = Cookies.get('accessToken');
             return token ? redirect('/home') : redirect('/login');
-          }} 
+          }}
         />
-        <Route path='/home' element={<LoggedPage />} loader={checkAuth}/>
+        <Route path='/home' element={<LoggedPage />} loader={checkAuth} />
         <Route path='/login' element={<LoginPage />} loader={checkNotAuth} />
         <Route path='/register' element={<RegisterPage />} loader={checkNotAuth} />
         <Route path='/workout' element={<WorkoutPage />} loader={checkAuth} />
@@ -54,13 +59,12 @@ function App() {
         <Route path='/exercises' element={<ExercisesPage />} loader={checkAuth} />
       </Route>
     )
-  )
+  );
 
 
   return (
     <div className="App">
       <RouterProvider router={router} />
-
     </div>
   );
 }

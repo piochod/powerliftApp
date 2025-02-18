@@ -13,7 +13,7 @@ const {brzyckiFormula} = require("./utils");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:3001' }));
 app.use(express.json());
 
 sequelize
@@ -26,6 +26,10 @@ sequelize
 app.post("/register", async (req, res) => {
   try {
     const { username, password } = req.body;
+    const userExists = await User.findOne({ where: { username } });
+    if (userExists) {
+      return res.status(400).json({ message: "Username is already used." });
+    }
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({ username, password: hashedPassword });
     res.status(201).json({ message: "User registered successfully", user });
@@ -73,7 +77,9 @@ const verifyToken = (req, res, next) => {
 
 app.get("/userInfo", verifyToken, async (req, res) => {
   try {
-    const user = await User.findByPk(req.user.userId);
+    const user = await User.findByPk(req.user.userId,{
+      attributes: {exclude: ['password']}
+    });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -169,24 +175,12 @@ app.post("/workout", async (req, res) => {
   }
 });
 
-app.get("/workouts/:userId", verifyToken, async (req, res) => {
+app.get("/workouts", verifyToken, async (req, res) => {
   try {
-    const { userId } = req.params;
+    const { userId } = req.user;
 
     const userWorkouts = await Workout.findAll({
       where: { userId: userId },
-      include: [
-        {
-          model: Set,
-          include: [
-            {
-              model: Exercise,
-              attributes: ["id", "muscle_group", "exercise"],
-            },
-          ],
-          attributes: ["id", "reps", "weight", "rpe"],
-        },
-      ],
       order: [["date", "DESC"]],
     });
 
@@ -268,62 +262,10 @@ app.get("/workout/:id", verifyToken, async (req, res) => {
   }
 });
 
-app.get('/exercise/:exerciseId/:userId/sets', verifyToken, async (req, res) => {
+app.get('/exercise/:exerciseId/workout-stats', verifyToken, async (req, res) => {
   try {
-    const { exerciseId, userId } = req.params;
-
-    const sets = await Set.findAll({
-      include: [
-        {
-          model: Exercise,
-          where: { id: exerciseId }, 
-          attributes: ['exercise'], 
-        },
-        {
-          model: Workout,
-          where: { userId: userId }, 
-          attributes: ['name', 'date','id'], 
-        },
-      ],
-      attributes: ['id', 'reps', 'weight', 'rpe', 'workoutId'], 
-    });
-
-    if (sets.length === 0) {
-      return res.status(404).json({ message: 'No sets found for this exercise.' });
-    }
-
-    const groupedSets = sets.reduce((acc, set) => {
-      const workoutId = set.workoutId;
-
-      if (!acc[workoutId]) {
-        acc[workoutId] = [];
-      }
-      acc[workoutId].push({
-        id: set.id,
-        reps: set.reps,
-        weight: set.weight,
-        rpe: set.rpe,
-        exercise: set.exercise.exercise, 
-        workout: set.workout, 
-      });
-      return acc;
-    }, {});
-
-    const groupedByWorkouts = Object.keys(groupedSets).map(workoutId => ({
-      workoutId,
-      sets: groupedSets[workoutId],
-    }));
-
-    res.json(groupedByWorkouts);
-  } catch (error) {
-    console.error('Error fetching sets:', error);
-    res.status(500).json({ message: 'An error occurred while fetching sets.' });
-  }
-});
-
-app.get('/exercise/:exerciseId/:userId/workout-stats', verifyToken, async (req, res) => {
-  try {
-    const { exerciseId, userId } = req.params;
+    const { exerciseId } = req.params;
+    const { userId } = req.user;
 
     const sets = await Set.findAll({
       include: [

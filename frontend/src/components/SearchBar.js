@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Cookies from 'js-cookie';
 import './SearchBar.css'
 
-const SearchBar = ({setResults}) => {
+const SearchBar = ({setResults, add}) => {
 
   const [query,setQuery] = useState('');
   const [exercises, setExercises] = useState([]);
@@ -26,7 +26,7 @@ const SearchBar = ({setResults}) => {
 
   useEffect(()=>{
     fetchData();
-  },[]);
+  },[query, add]);
 
   useEffect(()=>{
     if (query.length >= 3) {

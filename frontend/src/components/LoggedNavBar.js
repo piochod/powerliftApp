@@ -1,58 +1,45 @@
 import React, { useEffect, useState } from 'react';
+import { fetchUserInfo } from '../utils/fetchUtils';
 import './LoggedNavBar.css';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
 
 const LoggedNavBar = () => {
 
-  const [username,setUsername] = useState('');
-  const navigate = useNavigate();
+  const [username, setUsername] = useState('');
 
-  const fetchUserInfo = async () =>{
-    const token = Cookies.get('accessToken');
-    try{
-      const response = await fetch( 'http://localhost:3000/userInfo',{
-        method: 'GET',
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${token}`
-        }});
-        if(response.ok){
-          const userData = await response.json();
-          setUsername(userData.user.username);
-          Cookies.set('userId', userData.user.id);
-        }
-      }
-      catch(error){
-        console.log('Error fetching user info:', error)
-      }   
-  }
-
-  const destroySession = () =>{
+  const destroySession = () => {
     Cookies.remove('accessToken');
-    navigate('/login'); 
+    redirect('login');
   }
 
-
-  const redirect = (location) =>{
+  const redirect = (location) => {
     window.location.href = `http://localhost:3001/${location}`;
   }
 
-  useEffect( () =>{
-    fetchUserInfo()
-  },[])
+  useEffect(() => {
+    const getData = async() =>{
+      try{
+        const data = await fetchUserInfo();
+        setUsername(data.user.username);
+      }
+      catch(error){
+        console.log('Error fetching data', error)
+      }
+    }
+    getData();
+  }, [])
 
   return (
     <nav className='loggedNavBar'>
-        <ul>
-            <h4>Hi {username}</h4>
-            <li onClick={() => {redirect('home')}}>Home</li>
-            <li onClick={() => {redirect('workout')}}>Start a workout</li>
-            <li onClick={() => {redirect('exercises')}}>Exercices</li>
-            <li onClick={() => {redirect('stats')}}>My stats</li>
-            <li onClick={destroySession}>Log Out</li>
+      <ul>
+        <h4>Hi {username}</h4>
+        <li onClick={() => { redirect('home') }}>Home</li>
+        <li onClick={() => { redirect('workout') }}>Start a workout</li>
+        <li onClick={() => { redirect('exercises') }}>Exercices</li>
+        <li onClick={() => { redirect('stats') }}>My stats</li>
+        <li onClick={destroySession}>Log Out</li>
 
-        </ul>
+      </ul>
 
     </nav>
   )
